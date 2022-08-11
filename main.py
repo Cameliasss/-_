@@ -1,21 +1,34 @@
 '''
-    sklearn模块学习支持向量机
+    sklearn实现
 '''
+from sklearn.ensemble import AdaBoostClassifier
 import numpy as np
-from sklearn import svm
 
 def main():
-    x_train=np.array([[1,2],[2,3],[3,3],[2,1],[3,2]])
-    y_train=np.array([1,1,1,-1,-1])
-    x_new=np.array([[4,1]])
-    methods=['linear', 'poly', 'rbf', 'sigmoid']
-    for method in methods:
-        clf=svm.SVC(kernel=method)
-        clf.fit(x_train,y_train)
-        y_predict=clf.predict(x_new)
-        print('输入{}的类别是{}'.format(x_new,y_predict))
-        print('方法{}的参数为：{}'.format(method,clf.support_vectors_))
+    dataSet=np.array([
+        [0, 1, 3],
+        [0, 3, 1],
+        [1, 2, 2],
+        [1, 1, 3],
+        [1, 2, 3],
+        [0, 1, 2],
+        [1, 1, 2],
+        [1, 1, 1],
+        [1, 3, 1],
+        [0, 2, 1]
+
+    ])
+    Y=np.array([-1,-1,-1,-1,-1,-1,1,1,-1,-1])
+    clf=AdaBoostClassifier(learning_rate=0.5)
+    clf.fit(dataSet,Y)
+    y_predict=clf.predict(dataSet)
+    score=clf.score(dataSet,Y)
+    print('原始输出：{}'.format(Y))
+    print('原始预测值：{}'.format(y_predict))
+    print('预测的正确率：{:2f}'.format(score))
     return
 
-if __name__=="__main__":
+if __name__=='__main__':
     main()
+
+
